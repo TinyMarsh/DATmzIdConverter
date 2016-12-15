@@ -9,7 +9,9 @@ int main(){
 
 	std::vector<std::string> filePaths;
 
-	const int BUFSIZE = 1024;
+	// Theoretical max number of files if file path length = MAX_PATH
+	// Set max to 1000
+	const int BUFSIZE = 1000*(MAX_PATH+1)+1;
 	char buffer[BUFSIZE+1] = {0};
 	OPENFILENAME ofns = {0};
 	ofns.lStructSize = sizeof(ofns);
