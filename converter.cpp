@@ -35,7 +35,7 @@ int main(){
 	}
 
 	//We want to set the current directory to the Mascot cgi folder so that the export_data_2.pl script runs correctly
-	std::string mascotDir = "D:\\inetpub\\mascot\\cgi\\";
+	std::string mascotDir = "C:\\inetpub\\mascot\\cgi\\";
 	SetCurrentDirectory(mascotDir.c_str());
 
 	//The export_dat_2.pl script seems to only like double forward slashes in the DAT file paths. So we replace every backslash and insert 2 forward slashes
@@ -47,8 +47,11 @@ int main(){
 	}
 
 	for(int i=1, numFiles=filePaths.size(); i<numFiles; i++){
-		std::string systemString = "D:\\inetpub\\mascot\\perl64\\bin\\perl.exe export_dat_2.pl _ignoreionsscorebelow=5 _minpeplen=0 _server_mudpit_switch=99999999 _showsubsets=1 _sigthreshold=0.05 do_export=1 export_format=mzIdentML file=";
-		systemString+=filePaths[0]+"//"+filePaths[i]+" pep_exp_mz=1 pep_isbold=1 pep_isunique=1 pep_query=1 pep_rank=1 peptide_master=1 prot_acc=1 prot_desc=1 prot_hit_num=1 report=1000000 sessionid=all_secdisabledsession show_pep_dupes=1 show_same_sets=1 > ";
+		std::string systemString = "C:\\inetpub\\mascot\\perl64\\bin\\perl.exe export_dat_2.pl _ignoreionsscorebelow=5 _minpeplen=0 _server_mudpit_switch=99999999 _showsubsets=1 _sigthreshold=0.05 do_export=1 export_format=mzIdentML file=";
+		//Use this string to output mzIdentML as normal normal
+		//systemString+=filePaths[0]+"//"+filePaths[i]+" pep_exp_mz=1 pep_isbold=1 pep_isunique=1 pep_query=1 pep_rank=1 peptide_master=1 prot_acc=1 prot_desc=1 prot_hit_num=1 report=1000000 sessionid=all_secdisabledsession show_pep_dupes=1 show_same_sets=1 > ";
+		//Use this string to output MS2 data including fragment ion data
+		systemString+=filePaths[0]+"//"+filePaths[i]+" pep_exp_mz=1 pep_isbold=1 pep_isunique=1 pep_query=1 pep_rank=1 peptide_master=1 prot_acc=1 prot_desc=1 prot_hit_num=1 query_all=1 query_raw=1 report=1000000 sessionid=all_secdisabledsession show_pep_dupes=1 show_same_sets=1 > ";
 		std::string mzidFile = filePaths[i].erase(filePaths[i].length()-3);
 		mzidFile+=std::string("mzid");
 		systemString+=filePaths[0]+"//"+mzidFile;
